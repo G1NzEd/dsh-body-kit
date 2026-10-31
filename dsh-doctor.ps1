@@ -1,4 +1,4 @@
-# dsh-doctor.ps1 —— DSH 桌面端起不来时的体检 + 止血脚本
+﻿# dsh-doctor.ps1 —— DSH 桌面端起不来时的体检 + 止血脚本
 # 用法：右键「用 PowerShell 运行」，或者：
 #   powershell -ExecutionPolicy Bypass -File .\dsh-doctor.ps1
 #   powershell -ExecutionPolicy Bypass -File .\dsh-doctor.ps1 -Profile desktop -Backup
@@ -33,7 +33,7 @@ Write-Host "依赖 $($deps.Count) 个，启动清单 $($bundles.Count) 个"
 
 # ---- 2) 两处对不上 = 启动就炸 ----
 $onlyDep = $deps | Where-Object { $deps -and ($bundles -notcontains $_) }
-$onlyBundle = $bundles | Where-Object { $_ -and ($deps -notcontains $_) }
+$onlyBundle = $bundles | Where-Object { $_ -and ($deps -notcontains $_) -and ($_ -notlike "@deepseek-ai/*") }
 if ($onlyDep) {
     Write-Host ""
     Write-Host "⚠ 只在 dependencies、不在启动清单（装了但没启）:" -ForegroundColor Yellow
